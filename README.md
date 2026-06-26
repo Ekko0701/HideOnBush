@@ -111,6 +111,12 @@ Release flow:
 
 The repository or release asset must be accessible to Homebrew. For public distribution, keep the GitHub repository public.
 
+For official macOS distribution, use a Developer ID Application certificate and notarize the app:
+
+```bash
+./scripts/release-notarized.sh 0.1.0
+```
+
 ## Have a Problem?
 
 Open an issue on [GitHub Issues](https://github.com/Ekko0701/HideOnBush/issues).
