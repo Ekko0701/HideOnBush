@@ -1,0 +1,18 @@
+cask "hideonbush" do
+  version "__VERSION__"
+  sha256 "__SHA256__"
+
+  url "https://github.com/__OWNER_REPO__/releases/download/v#{version}/HideOnBush-v#{version}-macos-arm64.zip",
+      verified: "github.com/__OWNER_REPO__/"
+  name "HideOnBush"
+  desc "Menu bar switcher for approved Claude OTel Work and Personal modes"
+  homepage "https://github.com/__OWNER_REPO__"
+
+  depends_on macos: ">= :ventura"
+
+  app "HideOnBush.app"
+
+  zap trash: [
+    "~/Library/Application Support/HideOnBush",
+  ]
+end
