@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VERSION="${1:-0.1.0}"
-OWNER_REPO="${OWNER_REPO:-YOUR_GITHUB_USER/HideOnBush}"
+OWNER_REPO="${OWNER_REPO:-Ekko0701/HideOnBush}"
 RELEASE_DIR="${ROOT_DIR}/release"
 ZIP_NAME="HideOnBush-v${VERSION}-macos-arm64.zip"
 ZIP_PATH="${RELEASE_DIR}/${ZIP_NAME}"

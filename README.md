@@ -61,7 +61,7 @@ dist/HideOnBush.app
 릴리스 ZIP과 cask 파일 생성:
 
 ```bash
-OWNER_REPO=your-github-user/HideOnBush ./scripts/package-homebrew.sh 0.1.0
+./scripts/package-homebrew.sh 0.1.0
 ```
 
 생성물:
@@ -74,12 +74,11 @@ release/homebrew/Casks/hideonbush.rb
 배포 흐름:
 
 1. GitHub Release `v0.1.0`을 만들고 `HideOnBush-v0.1.0-macos-arm64.zip`을 업로드합니다.
-2. 별도 tap repo를 만듭니다. 예: `homebrew-hideonbush`.
-3. 생성된 `hideonbush.rb`를 tap repo의 `Casks/hideonbush.rb`에 커밋합니다.
-4. 사용자는 아래처럼 설치합니다.
+2. 생성된 `hideonbush.rb`를 Homebrew tap repo의 `Casks/hideonbush.rb`에 커밋합니다.
+3. 별도 tap repo 없이 이 repo를 직접 tap으로 쓸 수도 있습니다.
 
 ```bash
-brew tap your-github-user/hideonbush
+brew tap Ekko0701/hideonbush https://github.com/Ekko0701/HideOnBush.git
 brew install --cask hideonbush
 ```
 
