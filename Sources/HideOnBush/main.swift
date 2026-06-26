@@ -467,6 +467,15 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private var snapshot: StatusSnapshot?
 
+    private var currentMode: Mode = .personal
+    private var swayTimer: Timer?
+    private var swayPhase: CGFloat = 0
+
+    // Gentle wind sway on the foliage: ±5°, ~2.6s period, ~14 fps.
+    private static let swayAmplitude: CGFloat = 5 * .pi / 180
+    private static let swayTickInterval: TimeInterval = 0.07
+    private static let swayPeriod: CGFloat = 2.6
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
@@ -477,6 +486,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         refreshStatus()
+        startSwayAnimation()
     }
 
     private func refreshStatus() {
@@ -486,23 +496,53 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updateStatusButton() {
-        let mode = snapshot?.mode ?? .personal
-        let symbolName: String
-        switch mode {
-        case .work:
-            symbolName = "eye.fill"
-        case .personal:
-            symbolName = "eye.slash.fill"
-        case .mixed:
-            symbolName = "exclamationmark.triangle.fill"
-        }
+        currentMode = snapshot?.mode ?? .personal
+        renderStatusButton()
+    }
 
+    private func bushColor(for mode: Mode) -> NSColor {
+        switch mode {
+        case .personal:
+            return BushIcon.personalColor
+        case .work:
+            return BushIcon.workColor
+        case .mixed:
+            return BushIcon.mixedColor
+        }
+    }
+
+    private func renderStatusButton() {
         guard let button = statusItem.button else {
             return
         }
 
-        button.image = NSImage(systemSymbolName: symbolName, accessibilityDescription: "\(appName) \(mode.rawValue)")
-        button.title = " \(mode.rawValue)"
+        let sway = Self.swayAmplitude * sin(swayPhase)
+        let image = BushIcon.statusImage(color: bushColor(for: currentMode), sway: sway)
+        image.accessibilityDescription = "\(appName) \(currentMode.rawValue)"
+        button.image = image
+        button.imagePosition = .imageLeading
+        button.title = " \(currentMode.rawValue)"
+    }
+
+    private func startSwayAnimation() {
+        swayTimer?.invalidate()
+        let timer = Timer(timeInterval: Self.swayTickInterval, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.tickSway()
+            }
+        }
+        timer.tolerance = Self.swayTickInterval * 0.3
+        RunLoop.main.add(timer, forMode: .common)
+        swayTimer = timer
+    }
+
+    private func tickSway() {
+        let increment = CGFloat(Self.swayTickInterval) * 2 * .pi / Self.swayPeriod
+        swayPhase += increment
+        if swayPhase > 2 * .pi {
+            swayPhase -= 2 * .pi
+        }
+        renderStatusButton()
     }
 
     private func rebuildMenu() {
