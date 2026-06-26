@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/Ekko0701/HideOnBush/releases/latest">
-    <img alt="Latest release" src="https://img.shields.io/github/v/release/Ekko0701/HideOnBush?style=flat-square">
+    <img alt="Latest release" src="https://img.shields.io/badge/release-v0.1.0-blue?style=flat-square">
   </a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey?style=flat-square">
   <img alt="Architecture" src="https://img.shields.io/badge/arch-Apple%20Silicon-lightgrey?style=flat-square">
