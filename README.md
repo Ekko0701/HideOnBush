@@ -45,6 +45,8 @@ HideOnBush manages the same places that are commonly used to inject Claude OTel 
 - LaunchAgent: `~/Library/LaunchAgents/com.megastudy.otel.plist`
 - GUI environment: `launchctl setenv` / `launchctl unsetenv`
 
+Clean installs start in Personal Mode. Work Mode is only enabled when you explicitly select it from the menu.
+
 Work Mode restores the backed-up Claude OTel shell block and LaunchAgent, then sets the GUI environment values.
 
 Personal Mode removes the shell block, unloads and removes the LaunchAgent, then clears the tracked GUI environment values.

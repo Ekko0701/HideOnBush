@@ -486,7 +486,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updateStatusButton() {
-        let mode = snapshot?.mode ?? .mixed
+        let mode = snapshot?.mode ?? .personal
         let symbolName: String
         switch mode {
         case .work:
