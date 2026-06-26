@@ -12,17 +12,6 @@ cask "hideonbush" do
 
   app "HideOnBush.app"
 
-  caveats do
-    <<~EOS
-      HideOnBush is currently distributed without Apple notarization.
-      If macOS blocks it on first launch, run:
-
-        xattr -dr com.apple.quarantine /Applications/HideOnBush.app
-
-      Then open HideOnBush again.
-    EOS
-  end
-
   zap trash: [
     "~/Library/Application Support/HideOnBush",
   ]
