@@ -37,6 +37,14 @@ Or download the latest ZIP from [GitHub Releases](https://github.com/Ekko0701/Hi
 
 > Homebrew may refuse casks from non-official taps unless the tap is trusted locally.
 
+If macOS blocks the app on first launch because it cannot verify the developer, remove the quarantine attribute and open it again:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/HideOnBush.app
+```
+
+The long-term fix is Developer ID signing and Apple notarization.
+
 ## How It Works
 
 HideOnBush manages the same places that are commonly used to inject Claude OTel variables on macOS:
