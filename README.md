@@ -1,51 +1,54 @@
-# HideOnBush
+<h1 align="center">HideOnBush</h1>
 
-HideOnBush는 승인된 개인/업무 사용 시나리오에서 Claude OTel 설정을 Work Mode와 Personal Mode로 전환하는 macOS 메뉴바 앱입니다.
+<p align="center">
+  A tiny macOS menu bar app for switching approved Claude OTel settings between Work Mode and Personal Mode.
+</p>
 
-## 제어 대상
+<p align="center">
+  <a href="https://github.com/Ekko0701/HideOnBush/releases/latest">
+    <img alt="Latest release" src="https://img.shields.io/github/v/release/Ekko0701/HideOnBush?style=flat-square">
+  </a>
+  <img alt="Platform" src="https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey?style=flat-square">
+  <img alt="Architecture" src="https://img.shields.io/badge/arch-Apple%20Silicon-lightgrey?style=flat-square">
+  <img alt="Swift" src="https://img.shields.io/badge/Swift-6-orange?style=flat-square">
+</p>
 
-- `~/.zshrc` 또는 현재 셸에 맞는 프로파일의 Claude OTel export 블록
-- `~/Library/LaunchAgents/com.megastudy.otel.plist`
-- 현재 `launchctl` GUI 환경에 들어간 알려진 `CLAUDE_*`, `OTEL_*` 값
+## Features
 
-## 모드
+- Native macOS menu bar app.
+- Switch Claude OTel telemetry settings between Work Mode and Personal Mode.
+- Controls shell profile exports, LaunchAgent configuration, and `launchctl` GUI environment values.
+- Backs up the existing Work configuration on first launch and restores it when Work Mode is enabled.
+- Shows the current state of shell profile, LaunchAgent, and GUI environment in the menu.
+- Copies a compact status report to the clipboard for troubleshooting.
+- No background network calls from HideOnBush itself.
 
-- Work Mode: 백업된 셸 블록과 LaunchAgent를 복원하고 `launchctl setenv`로 GUI 환경도 다시 설정합니다.
-- Personal Mode: 셸 블록을 제거하고 LaunchAgent를 unload/remove한 뒤, 추적 대상 GUI 환경 변수를 `launchctl unsetenv`로 제거합니다.
+## Download
 
-이미 실행 중인 앱은 예전 환경 변수를 계속 들고 있습니다. 모드 전환 후에는 Claude Desktop, VSCode, Cursor, JetBrains IDE, Terminal, iTerm을 완전히 종료한 뒤 다시 실행해야 합니다.
-
-## 백업 위치
-
-처음 실행할 때 현재 Work 설정을 아래 위치에 백업합니다.
-
-```text
-~/Library/Application Support/HideOnBush
-```
-
-Work Mode 복원 시 가능하면 이 백업본을 그대로 사용하므로, 기존 회사 설정의 세부 값이 임의로 바뀌지 않습니다.
-
-## 빌드
-
-```bash
-./scripts/build.sh
-```
-
-앱 번들은 아래 위치에 생성됩니다.
-
-```text
-dist/HideOnBush.app
-```
-
-## 실행
+Install with Homebrew:
 
 ```bash
-./scripts/run.sh
+brew tap Ekko0701/hideonbush https://github.com/Ekko0701/HideOnBush.git
+brew install --cask hideonbush
 ```
 
-또는 Finder에서 `dist/HideOnBush.app`를 직접 열면 됩니다.
+Or download the latest ZIP from [GitHub Releases](https://github.com/Ekko0701/HideOnBush/releases).
 
-## 메뉴
+## How It Works
+
+HideOnBush manages the same places that are commonly used to inject Claude OTel variables on macOS:
+
+- Shell profile: `~/.zshrc`, `~/.bash_profile`, or `~/.bashrc`
+- LaunchAgent: `~/Library/LaunchAgents/com.megastudy.otel.plist`
+- GUI environment: `launchctl setenv` / `launchctl unsetenv`
+
+Work Mode restores the backed-up Claude OTel shell block and LaunchAgent, then sets the GUI environment values.
+
+Personal Mode removes the shell block, unloads and removes the LaunchAgent, then clears the tracked GUI environment values.
+
+Already-running apps keep their old environment. After switching modes, fully quit and reopen Claude Desktop, VSCode, Cursor, JetBrains IDEs, Terminal, or iTerm.
+
+## Menu
 
 - `Personal Mode로 전환`
 - `Work Mode로 전환`
@@ -54,32 +57,59 @@ dist/HideOnBush.app
 - `셸 프로파일 열기`
 - `LaunchAgents 폴더 열기`
 
-## Homebrew 배포
+## Backup Location
 
-개인 배포용 Homebrew tap을 따로 만들고, GitHub Release ZIP을 cask에서 받게 하는 방식이 가장 단순합니다.
+On first launch, HideOnBush stores the current Work configuration under:
 
-릴리스 ZIP과 cask 파일 생성:
+```text
+~/Library/Application Support/HideOnBush
+```
+
+When Work Mode is enabled, HideOnBush prefers this backup so existing company-provided values are preserved.
+
+## Build From Source
+
+```bash
+./scripts/build.sh
+```
+
+The app bundle is written to:
+
+```text
+dist/HideOnBush.app
+```
+
+Run locally:
+
+```bash
+./scripts/run.sh
+```
+
+## Homebrew Release
+
+Create a release ZIP and a cask file:
 
 ```bash
 ./scripts/package-homebrew.sh 0.1.0
 ```
 
-생성물:
+Generated files:
 
 ```text
 release/HideOnBush-v0.1.0-macos-arm64.zip
 release/homebrew/Casks/hideonbush.rb
 ```
 
-배포 흐름:
+Release flow:
 
-1. GitHub Release `v0.1.0`을 만들고 `HideOnBush-v0.1.0-macos-arm64.zip`을 업로드합니다.
-2. 생성된 `hideonbush.rb`를 Homebrew tap repo의 `Casks/hideonbush.rb`에 커밋합니다.
-3. 별도 tap repo 없이 이 repo를 직접 tap으로 쓸 수도 있습니다.
+1. Create a GitHub Release such as `v0.1.0`.
+2. Upload `HideOnBush-v0.1.0-macos-arm64.zip`.
+3. Commit the generated cask file to `Casks/hideonbush.rb`.
 
-```bash
-brew tap Ekko0701/hideonbush https://github.com/Ekko0701/HideOnBush.git
-brew install --cask hideonbush
-```
+## Have a Problem?
 
-업데이트 시에는 새 버전 ZIP을 GitHub Release에 올리고, tap repo의 `version`과 `sha256`이 반영된 cask 파일을 갱신합니다.
+Open an issue on [GitHub Issues](https://github.com/Ekko0701/HideOnBush/issues).
+
+---
+
+HideOnBush is designed for approved personal/work mode switching on macOS devices where Claude OTel configuration is managed through user-level shell profile and LaunchAgent settings.
