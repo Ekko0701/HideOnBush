@@ -8,7 +8,7 @@ cask "hideonbush" do
   desc "Menu bar switcher for approved Claude OTel Work and Personal modes"
   homepage "https://github.com/__OWNER_REPO__"
 
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "HideOnBush.app"
 

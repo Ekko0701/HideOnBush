@@ -29,10 +29,13 @@ Install with Homebrew:
 
 ```bash
 brew tap Ekko0701/hideonbush https://github.com/Ekko0701/HideOnBush.git
+brew trust --tap ekko0701/hideonbush
 brew install --cask hideonbush
 ```
 
 Or download the latest ZIP from [GitHub Releases](https://github.com/Ekko0701/HideOnBush/releases).
+
+> Homebrew may refuse casks from non-official taps unless the tap is trusted locally.
 
 ## How It Works
 
@@ -105,6 +108,8 @@ Release flow:
 1. Create a GitHub Release such as `v0.1.0`.
 2. Upload `HideOnBush-v0.1.0-macos-arm64.zip`.
 3. Commit the generated cask file to `Casks/hideonbush.rb`.
+
+The repository or release asset must be accessible to Homebrew. For public distribution, keep the GitHub repository public.
 
 ## Have a Problem?
 
