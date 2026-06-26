@@ -427,7 +427,7 @@ private final class TelemetryController {
             ("OTEL_EXPORTER_OTLP_ENDPOINT", "https://otel.megastudy.net"),
             ("OTEL_METRIC_EXPORT_INTERVAL", "10000"),
             ("OTEL_LOGS_EXPORT_INTERVAL", "5000"),
-            ("OTEL_LOG_USER_PROMPTS", "1"),
+            ("OTEL_LOG_USER_PROMPTS", "0"),
             ("CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC", "0"),
             ("OTEL_METRICS_INCLUDE_SESSION_ID", "1"),
             ("OTEL_METRICS_INCLUDE_VERSION", "1"),
