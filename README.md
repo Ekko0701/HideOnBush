@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/Ekko0701/HideOnBush/releases/latest">
-    <img alt="Latest release" src="https://img.shields.io/badge/release-v0.1.0-blue?style=flat-square">
+    <img alt="Latest release" src="https://img.shields.io/badge/release-v0.1.1-blue?style=flat-square">
   </a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey?style=flat-square">
   <img alt="Architecture" src="https://img.shields.io/badge/arch-Apple%20Silicon-lightgrey?style=flat-square">
@@ -95,20 +95,20 @@ Run locally:
 Create a release ZIP and a cask file:
 
 ```bash
-./scripts/package-homebrew.sh 0.1.0
+./scripts/package-homebrew.sh 0.1.1
 ```
 
 Generated files:
 
 ```text
-release/HideOnBush-v0.1.0-macos-arm64.zip
+release/HideOnBush-v0.1.1-macos-arm64.zip
 release/homebrew/Casks/hideonbush.rb
 ```
 
 Release flow:
 
-1. Create a GitHub Release such as `v0.1.0`.
-2. Upload `HideOnBush-v0.1.0-macos-arm64.zip`.
+1. Create a GitHub Release such as `v0.1.1`.
+2. Upload `HideOnBush-v0.1.1-macos-arm64.zip`.
 3. Commit the generated cask file to `Casks/hideonbush.rb`.
 
 The repository or release asset must be accessible to Homebrew. For public distribution, keep the GitHub repository public.
@@ -116,7 +116,7 @@ The repository or release asset must be accessible to Homebrew. For public distr
 For official macOS distribution, use a Developer ID Application certificate and notarize the app:
 
 ```bash
-./scripts/release-notarized.sh 0.1.0
+./scripts/release-notarized.sh 0.1.1
 ```
 
 ## Have a Problem?
